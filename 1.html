@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<script src="jsondata.js"></script>
+<script src="layout.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="main.css">
+
+<head>
+
+</head>
+
+<body>
+
+
+    <div class="header">
+        <h1>Shop Online</h1>
+    </div>
+
+    <div class="row">
+        <div class="column side">
+            <div id="topslist">
+                <h3>TOPS</h3>
+            </div>
+            <div id="filters">
+                <h3>Filter + Sort</h3>
+                By Size:
+                <br>
+                <ul id="bysize"></ul>
+                By Fit:
+                <br>
+                <ul id="byfit"></ul>
+                By Neck Type:
+                <br>
+                <ul id="bynecktype"></ul>
+                By SleeveType:
+                <br>
+                <ul id="bysleevetype"></ul>
+                By Colors:
+                <br>
+                <ul id="bycolor"></ul>
+                By Shirt Type:
+                <br>
+                <ul id="byshirttype"></ul>
+            </div>
+            <button type="button" onclick="filterfunc()">Apply</button>
+        </div>
+
+        <div class="column middle">
+            <h2>Display</h2>
+            <div id="list">
+                <div id="listbody">
+                </div>
+                <script>
+                    var newProductData = jsonproductdata;
+                    newProductData.forEach(drawOneProduct);
+                </script>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+
+
+
+    <script src="printfilters.js"></script>
+</body>
+
+
+</html>
