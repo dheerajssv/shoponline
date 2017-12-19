@@ -6,7 +6,7 @@ Set.prototype.union = function (setB) {
     return union;
 }
 
-function printnecktypes() {
+/*function printnecktypes() {
     var s = [];
     for (var i = 0; i < jsonproductdata.length; i++) {
         s.push(jsonproductdata[i].Neck_type);
@@ -21,69 +21,50 @@ function printnecktypes() {
         x.setAttribute("id", available_necktypes[i]);
         x.setAttribute("class", "filters");
         z.appendChild(x);
-        var k=document.createElement("span");
+        var k = document.createElement("span");
         k.setAttribute("class", "label-text");
         var t = document.createTextNode(available_necktypes[i]);
         k.appendChild(t);
         z.appendChild(k);
-        
+
         y.appendChild(z);
         document.getElementById("bynecktype").appendChild(y);
     }
+} */
+
+function loadfilters() {
+    printnecktypes();
+    printsleevetypes();
+    printshirttypes();
+    printsizes();
+    printfits();
+    printcolors();
 }
-printnecktypes();
+
+
+function printnecktypes() {
+    var s = [];
+    for (var i = 0; i < jsonproductdata.length; i++) {
+        s.push(jsonproductdata[i].Neck_type);
+    }
+    return print([...new Set(s)], "bynecktype");
+}
 
 function printsleevetypes() {
     var s = [];
     for (var i = 0; i < jsonproductdata.length; i++) {
         s.push(jsonproductdata[i].Sleeve_type);
     }
-    var available_sleevetypes = [...new Set(s)];
-    for (var i = 0; i < available_sleevetypes.length; i++) {
-
-        var y = document.createElement("LI");
-        var z = document.createElement("LABEL");
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-        x.setAttribute("id", available_sleevetypes[i]);
-        x.setAttribute("class", "filters");
-        z.appendChild(x);
-        var k=document.createElement("span");
-        k.setAttribute("class", "label-text");
-        var t = document.createTextNode(available_sleevetypes[i]);
-        k.appendChild(t);
-        z.appendChild(k);
-        y.appendChild(z);
-        document.getElementById("bysleevetype").appendChild(y);
-    }
+    return print([...new Set(s)], "bysleevetype");
 }
-printsleevetypes();
 
 function printshirttypes() {
     var s = [];
     for (var i = 0; i < jsonproductdata.length; i++) {
         s.push(jsonproductdata[i].shirt_type);
     }
-    var available_shirttypes = [...new Set(s)];
-
-    for (var i = 0; i < available_shirttypes.length; i++) {
-        var y = document.createElement("LI");
-        var z = document.createElement("LABEL");
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-        x.setAttribute("id", available_shirttypes[i]);
-        x.setAttribute("class", "filters");
-        z.appendChild(x);
-        var k=document.createElement("span");
-        k.setAttribute("class", "label-text");
-        var t = document.createTextNode(available_shirttypes[i]);
-        k.appendChild(t);
-        z.appendChild(k);
-        y.appendChild(z);
-        document.getElementById("byshirttype").appendChild(y);
-    }
+    return print([...new Set(s)], "byshirttype");
 }
-printshirttypes();
 
 function printsizes() {
     var result = new Set();
@@ -91,26 +72,8 @@ function printsizes() {
         var s = new Set(jsonproductdata[i].size);
         result = result.union(s);
     }
-    var available_sizes = [...result];
-
-    for (var i = 0; i < available_sizes.length; i++) {
-        var y = document.createElement("LI");
-        var z = document.createElement("LABEL");
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-        x.setAttribute("id", available_sizes[i]);
-        x.setAttribute("class", "filters");
-        z.appendChild(x);
-        var k=document.createElement("span");
-        k.setAttribute("class", "label-text");
-        var t = document.createTextNode(available_sizes[i]);
-        k.appendChild(t);
-        z.appendChild(k);
-        y.appendChild(z);
-        document.getElementById("bysize").appendChild(y);
-    }
+    return print([...result], "bysize");
 }
-printsizes();
 
 function printfits() {
     var result = new Set();
@@ -118,83 +81,76 @@ function printfits() {
         var s = new Set(jsonproductdata[i].fit);
         result = result.union(s);
     }
-    var available_fits = [...result];
-
-    for (var i = 0; i < available_fits.length; i++) {
-        var y = document.createElement("LI");
-        var z = document.createElement("LABEL");
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "checkbox");
-        x.setAttribute("id", available_fits[i]);
-        x.setAttribute("class", "filters");
-        z.appendChild(x);
-        var k=document.createElement("span");
-        k.setAttribute("class", "label-text");
-        var t = document.createTextNode(available_fits[i]);
-        k.appendChild(t);
-        z.appendChild(k);
-        y.appendChild(z);
-        document.getElementById("byfit").appendChild(y);
-    }
+    return print([...result], "byfit");
 }
-printfits();
 
 function printcolors() {
     var result = new Set();
     var s;
     for (var i = 0; i < jsonproductdata.length; i++) {
-        s = new Set(jsonproductdata[i].colors);
-        result = result.union(s);
+        for (var j = 0; j < jsonproductdata[i].available_colors.length; j++) {
+            s = new Set(jsonproductdata[i].available_colors[j].colors);
+            //console.log(s);
+            result = result.union(s);
+        }
     }
-    var available_colors = [...result];
+    return print([...result], "bycolor");
+}
 
-    for (var i = 0; i < available_colors.length; i++) {
+function print(availabletypes, divid) {
+    for (var i = 0; i < availabletypes.length; i++) {
         var y = document.createElement("LI");
         var z = document.createElement("LABEL");
         var x = document.createElement("INPUT");
         x.setAttribute("type", "checkbox");
-        x.setAttribute("id", available_colors[i]);
+        x.setAttribute("id", availabletypes[i]);
         x.setAttribute("class", "filters");
         z.appendChild(x);
-        var k=document.createElement("span");
+        var k = document.createElement("span");
         k.setAttribute("class", "label-text");
-        var t = document.createTextNode(available_colors[i]);
+        var t = document.createTextNode(availabletypes[i]);
         k.appendChild(t);
         z.appendChild(k);
         y.appendChild(z);
-        document.getElementById("bycolor").appendChild(y);
+        document.getElementById(divid).appendChild(y);
     }
 }
-printcolors();
 
 function getCheckedBoxes() {
     var checkboxes = document.getElementsByClassName("filters");
     var checkboxesChecked = [];
-    //console.log(checkboxes);
+    console.log(checkboxes);
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             checkboxesChecked.push(checkboxes[i].id);
         }
     }
-    //console.log(checkboxesChecked);
+    console.log(checkboxesChecked);
     return checkboxesChecked.length > 0 ? checkboxesChecked : null;
 }
 
-
 function filterfunc() {
+
     var checkedboxestofilter = getCheckedBoxes();
     var list = [];
-
+    document.getElementById("displayfilteredby").innerHTML = "Filtered by " + checkedboxestofilter;
     for (i = 0; i < checkedboxestofilter.length; i++) {
         var productList =
             newProductData.filter(
                 function (obj) {
                     if (!obj) return false;
                     var p = [];
-                    p = p.concat(obj.size, obj.fit, obj.Neck_type, obj.Sleeve_type, obj.colors, obj.shirt_type);
+                    var s = [];
+                    for (var j = 0; j < obj.available_colors.length; j++) {
+                        s = s.concat(obj.available_colors[j].colors);
+                        console.log(s);
+                    }
+                    p = p.concat(obj.size, obj.fit, obj.Neck_type, obj.Sleeve_type, s, obj.shirt_type);
+                    console.log(p);
                     return p.includes(checkedboxestofilter[i]);
                 }
             );
+
         list = list.concat(productList);
     }
     //console.log(list);
@@ -202,6 +158,7 @@ function filterfunc() {
     list = [...new Set(list)];
 
     console.log(list);
+    document.getElementById("listbody").innerHTML = "";
 
     list.forEach(drawOneProduct);
 }

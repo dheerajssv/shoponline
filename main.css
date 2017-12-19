@@ -11,6 +11,11 @@
         height: auto;
     }
 
+    div.gal img {
+        width: 15%;
+        height: auto;
+    }
+
     div.desc,
     div.title {
         padding: 3px;

@@ -2,7 +2,16 @@
 <html>
 <script src="jsondata.js"></script>
 <script src="layout.js"></script>
+<script src="printfilters.js"></script>
+<script>
+    function image(img,obj) {
+        var src = img.src;
+        var id=img.class;
+       // window.open(src);
+        document.getElementById(id).innerHTML="<img src=\"" + src+ " \" width=\"300\" height=\"200\">";
 
+    }
+</script>
 
 <link rel="stylesheet" type="text/css" href="main.css">
 
@@ -10,9 +19,7 @@
 
 </head>
 
-<body>
-
-
+<body onload="loadfilters()">
     <div class="header">
         <h1>Shop Online</h1>
     </div>
@@ -47,7 +54,7 @@
         </div>
 
         <div class="column middle">
-            <h2>Display</h2>
+            <h4 id="displayfilteredby"></h4>
             <div id="list">
                 <div id="listbody">
                 </div>
@@ -61,10 +68,7 @@
         </div>
 
     </div>
-
-
-
-    <script src="printfilters.js"></script>
+    
 </body>
 
 
